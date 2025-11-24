@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.hibernate.testcasetemplate</groupId>
-    <artifactId>test-case-template-hibernate-orm-7</artifactId>
+    <artifactId>test-case-template-hibernate-orm-6</artifactId>
     <version>1.0.0.Final</version>
-    <name>Hibernate ORM 7 Test Case Template</name>
+    <name>Hibernate ORM 6 Test Case Template</name>
 
     <properties>
         <version.com.h2database>2.4.240</version.com.h2database>
-        <version.junit-jupiter>5.12.2</version.junit-jupiter>
-        <version.org.hibernate.orm7>7.1.9.Final</version.org.hibernate.orm7>
+        <version.junit-jupiter>5.11.4</version.junit-jupiter>
+        <version.org.hibernate.orm>6.6.34.Final</version.org.hibernate.orm>
         <version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>
     </properties>
 
@@ -19,7 +19,7 @@
             <dependency>
                 <groupId>org.hibernate.orm</groupId>
                 <artifactId>hibernate-platform</artifactId>
-                <version>${version.org.hibernate.orm7}</version>
+                <version>${version.org.hibernate.orm}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -37,14 +37,6 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-        </dependency>
-        <!--
-            Need to have a dependency on scanner if we want to rely on automatic entity discovery in tests,
-            JPAUnitTestCase in particular:
-         -->
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-scan-jandex</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -87,26 +79,22 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.1</version>
                 <configuration>
-                    <release>17</release>
+                    <release>11</release>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.hibernate.orm</groupId>
-                <artifactId>hibernate-maven-plugin</artifactId>
-                <version>${version.org.hibernate.orm7}</version>
+                <groupId>org.hibernate.orm.tooling</groupId>
+                <artifactId>hibernate-enhance-maven-plugin</artifactId>
+                <version>${version.org.hibernate.orm}</version>
                 <executions>
                     <execution>
                         <configuration>
-                            <!-- Adjust the default configuration to your needs: -->
+                            <base>${project.build.testOutputDirectory}</base>
+                            <dir>${project.build.testOutputDirectory}</dir>
                             <enableAssociationManagement>false</enableAssociationManagement>
-                            <enableExtendedEnhancement>false</enableExtendedEnhancement>
                             <enableDirtyTracking>false</enableDirtyTracking>
+                            <enableExtendedEnhancement>false</enableExtendedEnhancement>
                             <enableLazyInitialization>false</enableLazyInitialization>
-                            <fileSets>
-                                <fileSet>
-                                    <directory>${project.build.testOutputDirectory}</directory>
-                                </fileSet>
-                            </fileSets>
                         </configuration>
                         <phase>test-compile</phase>
                         <goals>

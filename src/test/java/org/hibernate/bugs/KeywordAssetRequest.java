@@ -7,7 +7,7 @@ import org.hibernate.annotations.BatchSize;
 import java.util.Set;
 
 @Entity
-public class KeywordAssetRequest extends AssetRequest {
+public class KeywordAssetRequest extends Request {
 
 	@ElementCollection
 	@BatchSize(size = 20)

@@ -44,7 +44,8 @@ class JPAUnitTestCase {
 
     Predicate getPredicate(CriteriaBuilder cb, Root<Request> root) {
         var pattern = "%abc%";
-        var treat = cb.treat(root, KeywordAssetRequest.class);
-        return cb.like(cb.lower(treat.join("tokens", LEFT)), pattern);
+        // var path = (Root<?>) root;
+        var path = cb.treat(root, KeywordAssetRequest.class);
+        return cb.like(cb.lower(path.join("tokens", LEFT)), pattern);
     }
 }

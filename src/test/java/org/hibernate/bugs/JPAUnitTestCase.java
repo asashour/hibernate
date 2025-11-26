@@ -1,14 +1,13 @@
 package org.hibernate.bugs;
 
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import static jakarta.persistence.criteria.JoinType.LEFT;
 
@@ -45,8 +44,6 @@ class JPAUnitTestCase {
 
     Predicate getPredicate(CriteriaBuilder cb, Root<Request> root) {
         var pattern = "%abc%";
-        // var path = (Root<?>) root;
-        var path = cb.treat(root, KeywordAssetRequest.class);
-        return cb.like(cb.lower(path.join("tokens", LEFT)), pattern);
+        return cb.like(cb.lower(root.join("tokens", LEFT)), pattern);
     }
 }
